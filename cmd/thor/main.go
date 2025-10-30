@@ -148,6 +148,7 @@ func main() {
 					allowedTracersFlag,
 					minEffectivePriorityFeeFlag,
 					hayabusaFlag,
+					stargateSandboxFlag,
 				},
 				Action: soloAction,
 			},
@@ -366,11 +367,11 @@ func soloAction(ctx *cli.Context) error {
 
 	flagGenesis := ctx.String(genesisFlag.Name)
 	if flagGenesis == "" {
-		if isHayabusa {
-			gene, forkConfig = genesis.NewHayabusaDevnet()
-		} else if isStargateSandbox {
+		if isHayabusa && isStargateSandbox {
 			gene, forkConfig = genesis.NewHayabusaSandbox()
-		}else {
+		} else if isHayabusa {
+			gene, forkConfig = genesis.NewHayabusaDevnet()
+		} else {
 			forkConfig = &thor.SoloFork
 			gene = genesis.NewDevnet()
 		}

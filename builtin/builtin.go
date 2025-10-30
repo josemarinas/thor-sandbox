@@ -39,7 +39,6 @@ var (
 	Measure         = mustLoadContract("Measure")
 	Stargate        = &stargateContract{mustLoadContract("Stargate")}       // 0x0000000000000000000000005374617267617465
 	StargateNFT     = &stargateNFTContract{mustLoadContract("StargateNFT")} // 0x00000000000000000053746172676174654e4654
-	StargateProxy   = mustLoadContract("StargateProxy")
 	ClockLib        = mustLoadContract("ClockLib")        // 0x000000000000000000000000436C6F636B4C6962
 	LevelsLib       = mustLoadContract("LevelsLib")       // 0x00000000000000000000004c6576656c734C6962
 	MintingLogicLib = mustLoadContract("MintingLogicLib") // 0x00000000004D696e74696E674c6f6769634C6962
