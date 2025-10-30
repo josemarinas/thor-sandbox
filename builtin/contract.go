@@ -34,19 +34,6 @@ func mustLoadContract(name string) *contract {
 	}
 }
 
-func mustLoadExternalContract(name string) *contract {
-	asset := "external/" + name + ".abi"
-	data := gen.MustABI(asset)
-	abi, err := abi.New(data)
-	if err != nil {
-		panic(errors.Wrap(err, "load ABI for '"+name+"'"))
-	}
-	return &contract{
-		name,
-		thor.BytesToAddress([]byte(name)),
-		abi,
-	}
-}
 
 // RuntimeBytecodes load runtime byte codes.
 func (c *contract) RuntimeBytecodes() []byte {
