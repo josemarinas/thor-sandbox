@@ -129,39 +129,6 @@ type methodKey struct {
 	abi.MethodID
 }
 
-// Level represents a single NFT or staking level configuration.
-type Level struct {
-	Name                     string   // Name of the level (e.g., "Thunder", "Mjolnir")
-	IsX                      bool     // Whether the level is for X-tokens
-	ID                       uint8    // ID to identify the level, as a continuation of the legacy strength levels
-	MaturityBlocks           uint64   // Maturity period in blocks
-	ScaledRewardFactor       uint64   // Reward multiplier for that level scaled by 100 (i.e., 1.5 becomes 150)
-	VetAmountRequiredToStake *big.Int // VET amount required for staking
-}
-
-// LevelAndSupply links a Level with its circulating supply and cap.
-type LevelAndSupply struct {
-	Level             Level  // Level details
-	CirculatingSupply uint32 // Current circulating supply (Solidity uint208 → big.Int)
-	Cap               uint32 // Maximum supply cap
-}
-
-// StargateInitializeV1Params represents the initialization parameters for Stargate V1.
-type StargatNFTInitializeV1Params struct {
-	TokenCollectionName   string           // ERC721 token collection name
-	TokenCollectionSymbol string           // ERC721 token collection symbol
-	BaseTokenURI          string           // Base URI for the token metadata
-	Admin                 thor.Address     // Access control: Default admin address
-	Upgrader              thor.Address     // Access control: Upgrader address
-	Pauser                thor.Address     // Access control: Pauser address
-	LevelOperator         thor.Address     // Access control: Level operator address
-	LegacyNodes           thor.Address     // Address of the legacy TokenAuction contract
-	StargateDelegation    thor.Address     // Address of the Stargate delegation contract
-	VthoToken             thor.Address     // Address of the VTHO token contract
-	LegacyLastTokenId     uint64           // Last token ID minted in the legacy TokenAuction contract
-	LevelsAndSupplies     []LevelAndSupply // A list of levels and their supply
-}
-
 var nativeMethods = make(map[methodKey]*nativeMethod)
 
 // FindNativeCall find native calls.
