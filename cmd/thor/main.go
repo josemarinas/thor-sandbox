@@ -148,6 +148,7 @@ func main() {
 					allowedTracersFlag,
 					minEffectivePriorityFeeFlag,
 					hayabusaFlag,
+					stargateSandboxFlag,
 				},
 				Action: soloAction,
 			},
@@ -338,6 +339,7 @@ func soloAction(ctx *cli.Context) error {
 	}
 
 	isHayabusa := ctx.Bool(hayabusaFlag.Name)
+	isStargateSandbox := ctx.Bool(stargateSandboxFlag.Name)
 	onDemandBlockProduction := ctx.Bool(onDemandFlag.Name)
 	blockInterval := ctx.Uint64(blockInterval.Name)
 	if blockInterval == 0 {
@@ -365,7 +367,9 @@ func soloAction(ctx *cli.Context) error {
 
 	flagGenesis := ctx.String(genesisFlag.Name)
 	if flagGenesis == "" {
-		if isHayabusa {
+		if isHayabusa && isStargateSandbox {
+			gene, forkConfig = genesis.NewHayabusaSandbox()
+		} else if isHayabusa {
 			gene, forkConfig = genesis.NewHayabusaDevnet()
 		} else {
 			forkConfig = &thor.SoloFork

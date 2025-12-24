@@ -93,13 +93,11 @@ func (b *Builder) ComputeID() (thor.Bytes32, error) {
 // Build build genesis block according to presets.
 func (b *Builder) Build(stater *state.Stater) (blk *block.Block, events tx.Events, transfers tx.Transfers, err error) {
 	state := stater.NewState(trie.Root{})
-
 	if b.stateProcs != nil {
 		if err := b.stateProcs(state); err != nil {
 			return nil, nil, nil, errors.Wrap(err, "state process")
 		}
 	}
-
 	rt := runtime.New(nil, state, &xenv.BlockContext{
 		Time:     b.timestamp,
 		GasLimit: b.gasLimit,

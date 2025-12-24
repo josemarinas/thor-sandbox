@@ -6,6 +6,8 @@
 package builtin
 
 import (
+	"math/big"
+
 	"github.com/pkg/errors"
 
 	"github.com/vechain/thor/v2/abi"
@@ -33,8 +35,16 @@ var (
 		mustLoadContract("ExtensionV2"),
 		mustLoadContract("ExtensionV3"),
 	}
-	Staker  = &stakerContract{mustLoadContract("Staker")}
-	Measure = mustLoadContract("Measure")
+	Staker          = &stakerContract{mustLoadContract("Staker")}
+	Measure         = mustLoadContract("Measure")
+	Stargate        = &stargateContract{mustLoadContract("Stargate")}       // 0x0000000000000000000000005374617267617465
+	StargateNFT     = &stargateNFTContract{mustLoadContract("StargateNFT")} // 0x00000000000000000053746172676174654e4654
+	ClockLib        = mustLoadContract("ClockLib")        // 0x000000000000000000000000436C6F636B4C6962
+	LevelsLib       = mustLoadContract("LevelsLib")       // 0x00000000000000000000004c6576656c734C6962
+	MintingLogicLib = mustLoadContract("MintingLogicLib") // 0x00000000004D696e74696E674c6f6769634C6962
+	SettingsLib     = mustLoadContract("SettingsLib")     // 0x00000000000000000053657474696E67734C6962
+	TokenLib        = mustLoadContract("TokenLib")        // 0x000000000000000000000000546F6b656e4C6962
+	TokenManagerLib = mustLoadContract("TokenManagerLib") // 0x0000000000546f6b656e4D616E616765724C6962
 
 	// return gas map maintains the builtin contracts that can be made native call cheaper
 	// only the 0.4.24 compiled contracts are allowed to return gas, as the newer compiler
@@ -60,7 +70,9 @@ type (
 		V2 *contract
 		V3 *contract
 	}
-	stakerContract struct{ *contract }
+	stakerContract      struct{ *contract }
+	stargateContract    struct{ *contract }
+	stargateNFTContract struct{ *contract }
 )
 
 func (p *paramsContract) Native(state *state.State) *params.Params {

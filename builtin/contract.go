@@ -34,6 +34,7 @@ func mustLoadContract(name string) *contract {
 	}
 }
 
+
 // RuntimeBytecodes load runtime byte codes.
 func (c *contract) RuntimeBytecodes() []byte {
 	asset := "compiled/" + c.name + ".bin-runtime"
